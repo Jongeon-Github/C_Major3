@@ -33,18 +33,18 @@ int main()
 	for (int i=0; i<kPeopleNum; i++)
 	{
 		cout << "Name: ";
-		std::getline(cin, name);
+		getline(cin, name);
 		
 		if (name != "")
 		{
 			cout << "When are they checking in: ";
-			std::getline(cin, checkIn);
+			getline(cin, checkIn);
 			strCheckInIndex = dayToIndex(checkIn);
 
 			if (kError != -1)
 			{
 				cout << "When are they checking out: ";
-				std::getline(cin, checkOut);
+				getline(cin, checkOut);
 				strCheckOutIndex = dayToIndex(checkOut);
 				if (kError != -1)
 				{
