@@ -2,7 +2,7 @@
 * Filename: m3.cpp
 * Project: Major 3
 * By: Jongeon Lee
-* Date: Mar , 2023
+* Date: Mar 8, 2023
 * Description: Write a program that calculates hotel bills for a meeting.
 */
 
