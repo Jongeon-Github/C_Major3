@@ -10,20 +10,20 @@
 #include <iostream>
 #include <sstream>
 
+#define ERROR -1
+
 using namespace std;
 
-int kError = 0;
-int dayToIndex(string inputString); //sun=1, mon=2, tue=3, wed=4, thu=5, fri=6, sat=7
-double calculateCostOfRoom(const double arrRoomRate[], int arrCheckIn, int arrCheckOut);
+int dayToIndex(string inputString);
+double calculateCostOfRoom(const double arrRoomRate[], int ckeckIn, int checkOut);
 
 int main()
 {
-	const double arrPrice[6] = {127.50, 128.25, 130.50, 150, 150, 162.50};
+	const double arrPrice[6] = {127.50, 128.25, 130.50, 150, 150, 162.50}; //daily room cost(sunday ~ saturday)
 	const int kPeopleNum = 4;
 	double roomRatePersonal = 0.00;
 	double arrRatePersonal[kPeopleNum] = { 0 };
 	double totalPrice = 0;
-
 	int strCheckInIndex = 0;
 	int strCheckOutIndex = 0;
 	string name;
@@ -41,29 +41,25 @@ int main()
 			getline(cin, checkIn);
 			strCheckInIndex = dayToIndex(checkIn);
 
-			if (kError != -1)
+			if (strCheckInIndex != ERROR)
 			{
 				cout << "When are they checking out: ";
 				getline(cin, checkOut);
 				strCheckOutIndex = dayToIndex(checkOut);
-				if (kError != -1)
+
+				if (strCheckOutIndex != ERROR)
 				{
 					if (strCheckInIndex < strCheckOutIndex)
 					{
-						if ((strCheckInIndex-strCheckOutIndex == 0) || (strCheckOutIndex < 5))
-						{
-							cout << "Error: invalid length of stay. Skipping this person." << endl << endl;
-
-						}
-						else if (strCheckInIndex >= 6)
-						{
-							cout << "Error: this person is missing the meeting. Skipping this person." << endl << endl;
-						}
-						else
+						if (strCheckInIndex <= 5 && strCheckOutIndex >= 5)
 						{
 							roomRatePersonal = calculateCostOfRoom(arrPrice, strCheckInIndex, strCheckOutIndex);
 							cout << "The room cost for " << name << " is " << roomRatePersonal << "." << endl << endl;
-						}					
+						}
+						else
+						{
+							cout << "Error: this person is missing the meeting. Skipping this person." << endl << endl;
+						}
 					}
 					else
 					{
@@ -73,13 +69,11 @@ int main()
 				else
 				{
 					cout << "Error: invalid check-out day. Skipping this person." << endl << endl;
-					kError = 0;
 				}
 			}
 			else
 			{
 				cout << "Error: invalid check-in day. Skipping this person." << endl << endl;
-				kError = 0;
 			}
 		}
 		else
@@ -102,9 +96,9 @@ int main()
 
 /*
 * Function: dayToIndex()
-* Description: 
-* Parameters: 
-* Returns: 
+* Description: This function is for changing input string to number.
+* Parameters: string inputString - This is input string from user. it could be day.
+* Returns: ERROR - This function returns to the global variable ERROR -1.
 */
 int dayToIndex(string inputString)
 {
@@ -138,21 +132,24 @@ int dayToIndex(string inputString)
 	}
 	else
 	{
-		return kError = -1;
+		return ERROR;
 	}
 }
 
 /*
 * Function: calculateCostOfRoom()
-* Description: 
+* Description: This function calculates the room cost.
 * Parameters:
-* Returns:
+	- arrCheckIn - This is room cost array.
+	- ckeckIn - This variable is day index of check-in.
+	- checkOut - This variable is day index of check-out.
+* Returns: result - This is room cost calculated by the room cost array.
 */
-double calculateCostOfRoom(const double arrRoomRate[], int arrCheckIn, int arrCheckOut)
+double calculateCostOfRoom(const double arrRoomRate[], int ckeckIn, int checkOut)
 {
 	double result = 0;
 	
-	for (int i = arrCheckIn - 1; i <= arrCheckOut - 2; i++)
+	for (int i = ckeckIn - 1; i <= checkOut - 2; i++)
 	{
 		result += arrRoomRate[i];
 	}
