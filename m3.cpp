@@ -20,7 +20,7 @@ double calculateCostOfRoom(const double arrRoomRate[], int ckeckIn, int checkOut
 int main()
 {
 	const double arrPrice[6] = {127.50, 128.25, 130.50, 150, 150, 162.50}; //daily room cost(sunday ~ saturday)
-	const int kPeopleNum = 4;
+	const int kPeopleNum = 4; // The number of people who want to stay in hotel.
 	double roomRatePersonal = 0.00;
 	double arrRatePersonal[kPeopleNum] = { 0 };
 	double totalPrice = 0;
